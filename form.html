@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
+    <style>
+        .error {
+            border: 0.3rem solid red;
+        }
+
+        button {
+            border: 2px solid black;
+            width: 120px;
+            height: 25px;
+            background-color: aqua;
+            margin-top: 20px;
+            border-radius: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form>
+        <label>
+            <h2>Форма отправки</h2>
+            <div class="user">
+                <h3>ФИО</h3>
+                <input class="name form-control" type="text"><span>Введите Имя Фамилию</span>
+            </div>
+            <div class="tel">
+                <h3>Телефон</h3>
+                <input class="phone form-control" type="text"><span>Введите номер телефона</span>
+            </div>
+            <div class="email">
+                <h3>Почта</h3>
+                <input class="mail form-control" type="text"><span>Введите адрес почты</span>
+            </div>
+            <div>
+                <h3>Коментарий</h3>
+                <input class="comment form-control" type="text"><span>Ваш коментарий</span>
+            </div>
+
+
+        </label>
+        <button>Отправить</button>
+    </form>
+
+    <script>
+        "use strict";
+
+        const formEl = document.querySelector('form');
+        const formControlEls = formEl.querySelectorAll('input');
+        formEl.addEventListener('submit', event => {
+            formControlEls.forEach(formControlEl => {
+                if (formControlEl.value === '') {
+                    formControlEl.classList.add('error');
+                    event.preventDefault();
+                }
+            });
+        });
+
+        formEl.addEventListener('input', event => {
+            if (!event.target.classList.contains('form-control')) {
+                return;
+            }
+            event.target.value === ''
+                ? event.target.classList.add('error')
+                : event.target.classList.remove('error');
+        });
+        document.querySelector('button').addEventListener('click', event => {
+            let reMail = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+            let myMail = document.querySelector('.mail').value;
+            let spanMail = document.querySelector('.email span');
+            let validMail = reMail.test(myMail);
+            if (validMail) spanMail.innerHTML = 'Адрес эл. почты введен правильно!';
+            else spanMail.innerHTML = 'Адрес электронной почты введен неправильно!';
+
+
+            let reName = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/iu;
+            let myName = document.querySelector('.name').value;
+            let spanName = document.querySelector('.user span');
+            let validName = reName.test(myName);
+            if (validName) spanName.innerHTML = 'Имя введено правильно!';
+            else spanName.innerHTML = 'Имя введено неправильно!';
+
+            let reTel = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
+            //             Съедает следующие телефоны:
+            // +7(903)888-88-88
+            // 8(999)99-999-99
+            // +380(67)777-7-777
+            // 001-541-754-3010
+            // +1-541-754-3010
+            // 19-49-89-636-48018
+            // +233 205599853
+            let myTel = document.querySelector('.phone').value;
+            let spanTel = document.querySelector('.tel span');
+            let validTel = reTel.test(myTel);
+            if (validTel) spanTel.innerHTML = 'Телефон введен правильно!';
+            else spanTel.innerHTML = 'Телефон введен неправильно!';
+
+        });
+        // function CheckMail() {
+        //     let str = document.querySelector('.mail').value;
+        //     let regexp = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i;
+
+        //     if (regexp.test(str) === true) {
+        //         console.log(true);
+        //     } else {
+        //         console.log(false);
+        //     }
+
+        // }
+
+
+
+    </script>
+</body>
+
+</html>
